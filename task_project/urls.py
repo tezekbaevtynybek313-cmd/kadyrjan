@@ -16,10 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from contacts.views import ContactDetail,ContactDelete
+from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
+
+from tasks.views import TasksListCreateView, TasksDetailView, TasksUpdate, TasksDelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('contacts/put', put, as_view()),
-    path('contacts/delete',delete,as_view())
+    path('generic/tasks/', TasksListCreateView.as_view()),
+    path('generic/tasks/<int:pk>/', TasksDetailView.as_view()),
+    path('api/token', TokenObtainPairView.as_view()),
+    path('api/token/refresh', TokenRefreshView.as_view()),
+    path('tasks/<int:pk>/', TasksDetailView.as_view()),
+    path('tasks/<int:pk>/update/', TasksUpdate.as_view()),
+    path('tasks/<int:pk>/delete/', TasksDelete.as_view()),
+
 ]
